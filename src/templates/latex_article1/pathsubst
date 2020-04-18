@@ -1,0 +1,7 @@
+#epub_files =$(patsubst %.tex,%epub $(wildcard *.tex))
+tex_files = $(wildcard *.tex)
+
+epub_files = $(tex_files:.tex=.epub)
+
+all:
+	echo $(epub_files)
