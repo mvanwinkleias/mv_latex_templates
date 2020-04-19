@@ -1,0 +1,80 @@
+{
+	"prompts" : [
+		{
+			"name" : "project_name",
+			"fail_regex" : "[^0-9a-zA-Z_]",
+			"prompt" : "Project Name: ",
+			"description" : "Contains only letters, numbers and underscores.  Required."
+		},
+		{
+			"name" : "summary",
+			"prompt": "Summary: ",
+			"description": "Short description of project.  Required.",
+			"fail_regex" : "^\\s*$"
+		},
+		{
+			"name" : "wiki_page",
+			"prompt" : "Wiki page: ",
+			"description" : "External documentation."
+		},
+		{
+			"name" : "ticket",
+			"prompt" : "Ticket: ",
+			"description" : "Link to ticket, or ticket ID"
+		},
+		{
+			"dont_prompt" : true,
+			"name" : "AUTOMATION_USER",
+			"default_value" : "iasnetauto",
+			"description" : "Service user account.",
+			"prompt" : "Automation user name:"		
+		},
+		{
+			"dont_prompt" : true,
+			"name" : "AUTOMATION_GROUP",
+			"default_value" : "iasnetauto",
+			"description" : "Service group.",
+			"prompt" : "Automation user group:"		
+		},
+		{
+			"dont_prompt" : true,
+			"name" : "USE_AUTOMATION_PERMISSIONS",
+			"default_value" : 0,
+			"description" : "Sets up permissions for the service user."
+		},
+		{
+			"dont_prompt" : true,
+			"name" : "BASE_DIR",
+			"prompt" : "Base dir: ",
+			"description" : "Where project files get installed.  Required.",
+			"default_value" : "/opt/IAS"
+		},
+		{
+			"dont_prompt" : true,
+			"name" : "installed_directory_layout",
+			"default_value" : "project_directories-full_project.gmk",
+			"description" : "File containing layout."
+		}
+	],
+	"post-create-run" : "cd [% project_name %]; make",
+	"transforms" : [
+		{
+			"name" : "package_name",
+			"transform" : "underscores_to_dashes",
+			"template_string" : "[% project_name %]"
+		}
+	],
+	"not-template-files-contents" : {
+		"comment" : "For this project these are demonstrations / tests.",
+		"regexes": [
+			{ "regex" : "\\.jpg$", "comment" : "jpg files" },
+			{ "regex" : "\\.png$", "comment" : "png files" }
+		]
+	},
+	"not-template-files-paths" : {
+		"comment" : "For this project these are demonstrations / tests.",
+		"regexes": [
+			{ "regex" : "\\[% project.NON_TEMPLATE_NAME %\\]"}
+		]
+	}
+}
